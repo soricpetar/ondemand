@@ -6,7 +6,11 @@ ARG CONCURRENCY=4
 ENV PYTHON=/usr/libexec/platform-python
 
 # setup the ondemand repositories
-RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-6.noarch.rpm
+# RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-6.noarch.rpm
+# not working RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-compute-3.0-1.noarch.rpm
+
+RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-6.noarch.rpm && \
+    sed -i 's|/latest/|/build/3.1/|g' /etc/yum.repos.d/ondemand-web.repo
 
 # install all the dependencies
 RUN dnf -y update && \
@@ -29,7 +33,6 @@ RUN dnf -y update && \
         ondemand-apache \
         ondemand-ruby \
         ondemand-nodejs \
-        ondemand-python \
         ondemand-dex \
         ondemand-passenger \
         ondemand-nginx && \
@@ -51,10 +54,11 @@ COPY Gemfile                /opt/ood/Gemfile
 
 RUN cd /opt/ood; bundle install
 
-RUN source /opt/rh/ondemand/enable && \
-    rake -f /opt/ood/Rakefile -mj$CONCURRENCY build && \
-    mv /opt/ood/apps/* /var/www/ood/apps/sys/ && \
-    rm -rf /opt/ood/Rakefile /opt/ood/apps /opt/ood/lib
+RUN source /opt/rh/ondemand/enable
+RUN cat /opt/ood/Rakefile
+RUN rake -f /opt/ood/Rakefile -mj$CONCURRENCY build --trace
+RUN mv /opt/ood/apps/* /var/www/ood/apps/sys/
+RUN rm -rf /opt/ood/Rakefile /opt/ood/apps /opt/ood/lib
 
 # copy configuration files
 RUN mkdir -p /etc/ood/config
