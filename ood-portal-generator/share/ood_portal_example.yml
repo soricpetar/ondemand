@@ -1,4 +1,4 @@
-servername: "ADD"
+servername: '${SERVER_NAME}'
 
 auth:
   - 'AuthType openid-connect'
@@ -7,8 +7,8 @@ auth:
 
 oidc_uri: "/oidc/redirect_uri"
 oidc_provider_metadata_url: "https://accounts.google.com/.well-known/openid-configuration"
-oidc_client_id: "ADD"
-oidc_client_secret: "ADD"
+oidc_client_id: '${OIDC_CLIENT_ID}'
+oidc_client_secret: '${OIDC_CLIENT_SECRET}'
 oidc_remote_user_claim: "email"
 
 oidc_scope: "openid profile email"
@@ -23,7 +23,7 @@ oidc_settings:
   OIDCStripCookies: "mod_auth_openidc_session mod_auth_openidc_session_chunks mod_auth_open"
 OIDCResponseType: "code"
 
-logout_redirect: "ADD"
+logout_redirect: '${OIDC_LOGOUT_REDIRECT}'
 
 # regex to remove @gmail.com part, as it is not valid linux user
 user_map_match: '^([^@]+)@'
