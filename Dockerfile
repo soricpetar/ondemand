@@ -52,9 +52,6 @@ COPY apps                   /opt/ood/apps
 COPY Rakefile               /opt/ood/Rakefile
 COPY lib                    /opt/ood/lib
 COPY Gemfile                /opt/ood/Gemfile
-COPY local_gems/            /opt/ood/local_gems/
-
-RUN ls /opt/ood/local_gems/
 
 RUN cd /opt/ood; bundle install
 

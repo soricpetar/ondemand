@@ -121,3 +121,6 @@ tags
 
 # Ignore .vscode
 .vscode
+
+# Ignore env
+.env
