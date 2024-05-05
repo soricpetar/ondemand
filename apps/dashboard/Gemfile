@@ -67,7 +67,7 @@ gem 'sprockets-rails', '>= 2.0.0'
 # OOD specific gems
 gem 'ood_support', '~> 0.0.2'
 gem 'ood_appkit', '~> 2.1.0'
-gem 'ood_core', :git => 'git@github.com:andrejcermak/ood_core_extension.git', :branch => 'oodCoreDev'
+gem 'ood_core', :git => 'https://github.com/andrejcermak/ood_core_extension.git', :branch => 'oodCoreDev'
 gem 'pbs', '~> 2.2.1'
 gem 'rest-client', '~> 2.0'
 
