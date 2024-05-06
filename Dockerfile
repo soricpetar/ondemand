@@ -53,6 +53,8 @@ COPY Rakefile               /opt/ood/Rakefile
 COPY lib                    /opt/ood/lib
 COPY Gemfile                /opt/ood/Gemfile
 
+RUN git clone https://github.com/andrejcermak/ood_core_extension.git /opt/ood/local_gems/ood_core
+
 RUN cd /opt/ood; bundle install
 
 RUN source /opt/rh/ondemand/enable
