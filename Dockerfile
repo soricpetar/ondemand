@@ -14,9 +14,9 @@ RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-late
 
 # Install Go
 RUN dnf -y install wget && \
-    wget https://go.dev/dl/go1.20.3.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.20.3.linux-amd64.tar.gz && \
-    rm go1.20.3.linux-amd64.tar.gz && \
+    wget https://go.dev/dl/go1.20.4.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.20.4.linux-amd64.tar.gz && \
+    rm go1.20.4.linux-amd64.tar.gz && \
     export PATH=$PATH:/usr/local/go/bin
 
 # install all the dependencies
