@@ -47,10 +47,24 @@ RUN dnf -y update && \
     dnf clean all && rm -rf /var/cache/dnf/*
 
 # vuln cleanup
-RUN curl -sL https://rpm.nodesource.com/setup_18.x | bash - && \
-    dnf install -y nodejs
+# Verify Go installation
+RUN go version
+
+# Verify Node.js and npm installation
+RUN node -v
+RUN npm -v
+
+# Update npm to the latest version
 RUN npm install -g npm@latest
+
+# Clear npm cache
 RUN npm cache clean --force
+
+# Install esbuild
+RUN npm install esbuild@latest --verbose
+
+# Verify esbuild installation
+RUN ./node_modules/.bin/esbuild --version
 # ---
 
 RUN mkdir -p /opt/ood
