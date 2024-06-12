@@ -9,15 +9,15 @@ ENV PYTHON=/usr/libexec/platform-python
 # RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-6.noarch.rpm
 # not working RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-compute-3.0-1.noarch.rpm
 
-RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-8.el9.noarch.rpm && \
+RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-6.noarch.rpm && \
     sed -i 's|/latest/|/build/3.1/|g' /etc/yum.repos.d/ondemand-web.repo
 
-# Install Go
-# RUN dnf -y install wget && \
-#     wget https://go.dev/dl/go1.20.4.linux-amd64.tar.gz && \
-#     tar -C /usr/local -xzf go1.20.4.linux-amd64.tar.gz && \
-#     rm go1.20.4.linux-amd64.tar.gz && \
-#     export PATH=$PATH:/usr/local/go/bin
+Install Go
+RUN dnf -y install wget && \
+    wget https://go.dev/dl/go1.20.4.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.20.4.linux-amd64.tar.gz && \
+    rm go1.20.4.linux-amd64.tar.gz && \
+    export PATH=$PATH:/usr/local/go/bin
 
 # install all the dependencies
 RUN dnf -y update && \
@@ -45,6 +45,13 @@ RUN dnf -y update && \
         ondemand-passenger \
         ondemand-nginx && \
     dnf clean all && rm -rf /var/cache/dnf/*
+
+# vuln cleanup
+RUN curl -sL https://rpm.nodesource.com/setup_18.x | bash - && \
+    dnf install -y nodejs
+RUN npm install -g npm@latest
+RUN npm cache clean --force
+# ---
 
 RUN mkdir -p /opt/ood
 RUN mkdir -p /var/www/ood/{apps,public,discover}
