@@ -19,6 +19,8 @@ RUN dnf -y install wget && \
     rm go1.20.4.linux-amd64.tar.gz && \
     export PATH=$PATH:/usr/local/go/bin
 
+# esbuild
+npm install esbuild@latest
 # install all the dependencies
 RUN dnf -y update && \
     dnf install -y dnf-utils && \
@@ -46,8 +48,8 @@ RUN dnf -y update && \
         ondemand-nginx && \
     dnf clean all && rm -rf /var/cache/dnf/*
 
-# Install esbuild using npm
-RUN npm install -g esbuild
+# Verify esbuild installation
+RUN esbuild --version
 
 RUN mkdir -p /opt/ood
 RUN mkdir -p /var/www/ood/{apps,public,discover}
