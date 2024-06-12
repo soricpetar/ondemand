@@ -9,7 +9,7 @@ ENV PYTHON=/usr/libexec/platform-python
 # RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-6.noarch.rpm
 # not working RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-compute-3.0-1.noarch.rpm
 
-RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-6.noarch.rpm && \
+RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-8.el9.noarch.rpm && \
     sed -i 's|/latest/|/build/3.1/|g' /etc/yum.repos.d/ondemand-web.repo
 
 # Install Go
@@ -45,11 +45,6 @@ RUN dnf -y update && \
         ondemand-passenger \
         ondemand-nginx && \
     dnf clean all && rm -rf /var/cache/dnf/*
-
-# esbuild
-RUN npm install esbuild@latest
-# Verify esbuild installation
-RUN esbuild --version
 
 RUN mkdir -p /opt/ood
 RUN mkdir -p /var/www/ood/{apps,public,discover}
