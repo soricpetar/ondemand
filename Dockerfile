@@ -46,6 +46,9 @@ RUN dnf -y update && \
         ondemand-nginx && \
     dnf clean all && rm -rf /var/cache/dnf/*
 
+# Install esbuild using npm
+RUN npm install -g esbuild
+
 RUN mkdir -p /opt/ood
 RUN mkdir -p /var/www/ood/{apps,public,discover}
 RUN mkdir -p /var/www/ood/apps/{sys,dev,usr}
