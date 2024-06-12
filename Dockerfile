@@ -47,7 +47,7 @@ RUN dnf -y update && \
     dnf clean all && rm -rf /var/cache/dnf/*
 
 # esbuild
-npm install esbuild@latest
+RUN npm install esbuild@latest
 # Verify esbuild installation
 RUN esbuild --version
 
