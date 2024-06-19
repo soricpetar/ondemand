@@ -59,13 +59,6 @@ RUN mkdir -p /opt/ood
 RUN mkdir -p /var/www/ood/{apps,public,discover}
 RUN mkdir -p /var/www/ood/apps/{sys,dev,usr}
 
-
-# Install the latest version of esbuild
-RUN npm install esbuild@latest -g
-
-# Ensure esbuild uses the correct Go version
-RUN cd /var/www/ood/apps/sys/dashboard && npm install esbuild@latest
-
 COPY docker/launch-ood      /opt/ood/launch
 COPY mod_ood_proxy          /opt/ood/mod_ood_proxy
 COPY nginx_stage            /opt/ood/nginx_stage
@@ -106,6 +99,12 @@ RUN /opt/ood/nginx_stage/sbin/update_nginx_stage
 RUN echo $VERSION > /opt/ood/VERSION
 # This one bc centos:8 doesn't generate localhost cert
 RUN /usr/libexec/httpd-ssl-gencerts
+
+# Install the latest version of esbuild
+RUN npm install esbuild@latest -g
+
+# Ensure esbuild uses the correct Go version
+RUN cd /var/www/ood/apps/sys/dashboard && npm install esbuild@latest
 
 EXPOSE 8080
 EXPOSE 5556
