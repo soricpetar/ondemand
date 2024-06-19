@@ -47,13 +47,6 @@ RUN dnf -y update && \
         ondemand-nginx && \
     dnf clean all && rm -rf /var/cache/dnf/*
 
-# Install Go
-RUN dnf -y install wget && \
-    wget https://go.dev/dl/go1.21.11.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.21.11.linux-amd64.tar.gz && \
-    rm go1.21.11.linux-amd64.tar.gz && \
-    export PATH=$PATH:/usr/local/go/bin
-
 # Other existing commands
 RUN mkdir -p /opt/ood
 RUN mkdir -p /var/www/ood/{apps,public,discover}
@@ -100,11 +93,11 @@ RUN echo $VERSION > /opt/ood/VERSION
 # This one bc centos:8 doesn't generate localhost cert
 RUN /usr/libexec/httpd-ssl-gencerts
 
-# Install the latest version of esbuild
-RUN npm install esbuild@latest -g
-
-# Ensure esbuild uses the correct Go version
-RUN cd /var/www/ood/apps/sys/dashboard && npm install esbuild@latest
+# Rebuild esbuild with the correct Go version
+RUN npm install esbuild@latest -g && \
+    cd /var/www/ood/apps/sys/dashboard && npm install esbuild@latest && \
+    cd /var/www/ood/apps/sys/dashboard/node_modules/esbuild && \
+    npm rebuild esbuild --build-from-source
 
 EXPOSE 8080
 EXPOSE 5556
