@@ -94,8 +94,8 @@ RUN echo $VERSION > /opt/ood/VERSION
 RUN /usr/libexec/httpd-ssl-gencerts
 
 # Rebuild esbuild with the correct Go version
-RUN npm install esbuild@latest -g && \
-    cd /var/www/ood/apps/sys/dashboard && npm install esbuild@latest && \
+RUN npm install esbuild@0.21.5 -g && \
+    cd /var/www/ood/apps/sys/dashboard && npm install esbuild@0.21.5 && \
     cd /var/www/ood/apps/sys/dashboard/node_modules/esbuild && \
     npm rebuild esbuild --build-from-source
 
