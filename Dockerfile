@@ -54,16 +54,17 @@ RUN dnf -y install wget && \
     rm go1.21.11.linux-amd64.tar.gz && \
     export PATH=$PATH:/usr/local/go/bin
 
+# Other existing commands
+RUN mkdir -p /opt/ood
+RUN mkdir -p /var/www/ood/{apps,public,discover}
+RUN mkdir -p /var/www/ood/apps/{sys,dev,usr}
+
+
 # Install the latest version of esbuild
 RUN npm install esbuild@latest -g
 
 # Ensure esbuild uses the correct Go version
 RUN cd /var/www/ood/apps/sys/dashboard && npm install esbuild@latest
-
-# Other existing commands
-RUN mkdir -p /opt/ood
-RUN mkdir -p /var/www/ood/{apps,public,discover}
-RUN mkdir -p /var/www/ood/apps/{sys,dev,usr}
 
 COPY docker/launch-ood      /opt/ood/launch
 COPY mod_ood_proxy          /opt/ood/mod_ood_proxy
