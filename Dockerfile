@@ -12,6 +12,17 @@ ENV PYTHON=/usr/libexec/platform-python
 RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-6.noarch.rpm && \
     sed -i 's|/latest/|/build/3.1/|g' /etc/yum.repos.d/ondemand-web.repo
 
+# vuln cleanup
+# Verify Go installation
+# Install Go
+RUN dnf -y install wget && \
+    wget https://go.dev/dl/go1.19.9.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.19.9.linux-amd64.tar.gz && \
+    rm go1.19.9.linux-amd64.tar.gz && \
+    export PATH=$PATH:/usr/local/go/bin
+
+RUN go version
+
 # install all the dependencies
 RUN dnf -y update && \
     dnf install -y dnf-utils && \
@@ -38,34 +49,6 @@ RUN dnf -y update && \
         ondemand-passenger \
         ondemand-nginx && \
     dnf clean all && rm -rf /var/cache/dnf/*
-
-# vuln cleanup
-# Verify Go installation
-# Install Go
-RUN dnf -y install wget && \
-    wget https://go.dev/dl/go1.20.4.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.20.4.linux-amd64.tar.gz && \
-    rm go1.20.4.linux-amd64.tar.gz && \
-    export PATH=$PATH:/usr/local/go/bin
-
-RUN go version
-
-# Verify Node.js and npm installation
-RUN node -v
-RUN npm -v
-
-# Update npm to the latest version
-RUN npm install -g npm@latest
-
-# Clear npm cache
-RUN npm cache clean --force
-
-# Install esbuild
-RUN npm install esbuild@latest --verbose
-
-# Verify esbuild installation
-RUN ./node_modules/.bin/esbuild --version
-# ---
 
 RUN mkdir -p /opt/ood
 RUN mkdir -p /var/www/ood/{apps,public,discover}
