@@ -99,6 +99,8 @@ RUN npm install esbuild@0.21.5 -g && \
     cd /var/www/ood/apps/sys/dashboard/node_modules/esbuild && \
     npm rebuild esbuild --build-from-source
 
+RUN npm audit fix
+
 EXPOSE 8080
 EXPOSE 5556
 EXPOSE 3035
