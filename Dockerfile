@@ -10,16 +10,14 @@ ENV PYTHON=/usr/libexec/platform-python
 # not working RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-compute-3.0-1.noarch.rpm
 
 RUN dnf -y install https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-6.noarch.rpm && \
-    sed -i 's|/latest/|/build/3.1/|g' /etc/yum.repos.d/ondemand-web.repo
+     sed -i 's|/latest/|/build/3.1/|g' /etc/yum.repos.d/ondemand-web.repo && \
+     dnf -y update && \
+     dnf -y install wget && \
+     wget https://go.dev/dl/go1.22.4.linux-amd64.tar.gz && \
+     tar -C /usr/local -xzf go1.22.4.linux-amd64.tar.gz && \
+     rm go1.22.4.linux-amd64.tar.gz && \
+     export PATH=$PATH:/usr/local/go/bin
 
-# vuln cleanup
-# Verify Go installation
-# Install Go
-RUN dnf -y install wget && \
-    wget https://go.dev/dl/go1.22.4.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.22.4.linux-amd64.tar.gz && \
-    rm go1.22.4.linux-amd64.tar.gz && \
-    export PATH=$PATH:/usr/local/go/bin
 
 # install all the dependencies
 RUN dnf -y update && \
