@@ -21,8 +21,6 @@ RUN dnf -y install wget && \
     rm go1.19.9.linux-amd64.tar.gz && \
     export PATH=$PATH:/usr/local/go/bin
 
-RUN go version
-
 # install all the dependencies
 RUN dnf -y update && \
     dnf install -y dnf-utils && \
